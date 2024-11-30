@@ -2,46 +2,54 @@ package com.mypackage.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-public class Expense {
+public class Score {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer expenseId;
+    private Integer scoreId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    @Column(nullable = false, length = 7)
+    private String month; // Format: "YYYY-MM"
 
     @Column(nullable = false)
-    private BigDecimal amount;
+    private BigDecimal averageIncome;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
-    private Type type;
+    @Column(nullable = false)
+    private BigDecimal averageExpense;
 
     @Column
-    private String description;
+    private BigDecimal fixedExpense;
+
+    @Column
+    private BigDecimal variableExpense;
+
+    @Column
+    private BigDecimal savings;
+
+    @Column
+    private BigDecimal emergencyFund;
+
+    @Column
+    private BigDecimal targetSavings;
+
+    @Column
+    private BigDecimal achievementRate;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private Integer financialScore;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
-
-    public enum Type {
-        수입, 지출
-    }
 
     // Getters and Setters
     // Constructor
