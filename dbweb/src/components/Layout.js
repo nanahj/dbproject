@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
                 <div className="divider"></div>
                 <Link to="/Category" className="nav-link">분류별 지출 내역</Link>
                 <div className="divider"></div>
-                <Link to="/list" className="nav-link">내역</Link>
+                <Link to="/Score" className="nav-link">금융 습관 점수</Link>
         </nav>
       </aside>
       <div className="main-content">

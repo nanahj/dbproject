@@ -4,11 +4,13 @@ import Main from './pages/Main';
 import User from './pages/User';
 import Month from './pages/Month';
 import Category from './pages/Category';
+import Score from './pages/Score';
 import Layout from './components/Layout';
-import Header from './components/Header';
+import { ExpensesProvider } from "./components/ExpensesContext";
 
 function App() {
   return (
+    <ExpensesProvider>
     <Router>
         <Layout>
           <Routes>
@@ -16,9 +18,11 @@ function App() {
             <Route path="/User" element={<User />} />
             <Route path="/Month" element={<Month />} />
             <Route path="/Category" element={<Category  />} />
+            <Route path="/Score" element={<Score  />} />
           </Routes>
         </Layout>
     </Router>
+    </ExpensesProvider>
   );
 }
 
