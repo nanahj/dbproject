@@ -1,0 +1,97 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.layout {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center; /* 수직 중앙 정렬 */
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #DDC2AE;
+  padding: 20px;
+  height: 90%; /* 사이드바 높이 80%로 설정 */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 항목들을 위로 정렬 */
+}
+
+.sidebar h2 {
+  color: #000000; /* 글씨 검정색 */
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가운데 정렬 */
+  gap: 10px; /* 항목 간 간격을 더 좁혔습니다 */
+}
+
+.nav-link {
+  display: block;
+  color: #000000; /* 링크 글씨 검정색 */
+  text-decoration: none;
+  font-weight: bold;
+  margin: 5px 0; /* 상하 여백을 줄였습니다 */
+  justify-content: center;
+}
+
+.nav-link:hover {
+  color: #4e4e4e;
+}
+
+.nav-circle-container {
+  padding: 10px; /* 위쪽 여백을 줄여서 위로 올림 */
+  margin: 10px 0; /* 동그라미 위로 올리기 위해 margin 조정 */
+  display: flex;
+  justify-content: center;
+}
+
+.nav-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  border: 2px solid #ffffff; /* 동그라미 경계 흰색 */
+  border-radius: 50%;
+  color: #ffffff; /* 동그라미 안 글씨 흰색 */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-circle:hover {
+  background-color: #ffffff; /* 호버 시 배경 흰색 */
+  color: #4e4e4e; /* 글씨 검정색 */
+}
+
+.divider {
+  width: 90%;
+  height: 3px;
+  background-color: #ffffff; /* 구분선 흰색 */
+  margin: 10px 0; /* 각 항목 사이 여백을 줄였습니다 */
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  background-color: #fff;
+}
+
+.content {
+  padding: 20px;
+  background-color: #fff;
+}
