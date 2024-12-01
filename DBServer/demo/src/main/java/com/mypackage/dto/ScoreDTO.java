@@ -1,62 +1,20 @@
-package com.mypackage.entity;
+package com.mypackage.dto;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-@Entity
-public class Score {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer scoreId;
-
-    @Column(nullable = false)
+public class ScoreDTO {
     private Integer userId;
-
-    @Column(nullable = false, precision = 38, scale = 2)
     private BigDecimal averageIncome;
-
-    @Column(nullable = false, precision = 38, scale = 2)
     private BigDecimal averageExpense;
-
-    @Column(nullable = false, precision = 38, scale = 2)
     private BigDecimal fixedExpense;
-
-    @Column(nullable = false, precision = 38, scale = 2)
-    private BigDecimal variableExpense;
-
-    @Column(nullable = false, precision = 38, scale = 2)
+    private BigDecimal variableExpense; // 추가
     private BigDecimal savings;
-
-    @Column(nullable = false, precision = 38, scale = 2)
     private BigDecimal emergencyFund;
-
-    @Column(nullable = false, precision = 38, scale = 2)
-    private BigDecimal targetSavings;
-
-    @Column(nullable = false, precision = 38, scale = 2)
+    private BigDecimal targetSavings; // 추가
     private BigDecimal achievementRate;
-
-    @Column(nullable = false)
     private Integer financialScore;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(nullable = false)
-    private LocalDateTime updatedAt = LocalDateTime.now();
-
     // Getters and Setters
-
-    public Integer getScoreId() {
-        return scoreId;
-    }
-
-    public void setScoreId(Integer scoreId) {
-        this.scoreId = scoreId;
-    }
-
     public Integer getUserId() {
         return userId;
     }
@@ -135,21 +93,5 @@ public class Score {
 
     public void setFinancialScore(Integer financialScore) {
         this.financialScore = financialScore;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }

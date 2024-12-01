@@ -3,6 +3,10 @@ package com.mypackage.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class User {
@@ -16,6 +20,10 @@ public class User {
 
     @Column(nullable = false, unique = true, length = 255)
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // 순환 참조 방지
+    private List<Expense> expenses = new ArrayList<>();
 
     @Column(nullable = false)
     private BigDecimal targetBudget = BigDecimal.ZERO;
@@ -48,6 +56,10 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Expense> getExpenses() {
+        return expenses;
     }
 
     public BigDecimal getTargetBudget() {

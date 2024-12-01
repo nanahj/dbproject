@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ScoreService {
@@ -21,12 +20,7 @@ public class ScoreService {
 
     // 사용자별 점수 조회
     public List<Score> getScoresByUser(Integer userId) {
-        return scoreRepository.findByUserUserId(userId);
-    }
-
-    // 특정 월의 점수 조회
-    public Optional<Score> getScoreByUserAndMonth(Integer userId, String month) {
-        return Optional.ofNullable(scoreRepository.findByUserUserIdAndMonth(userId, month));
+        return scoreRepository.findByUserId(userId);
     }
 
     // 점수 생성

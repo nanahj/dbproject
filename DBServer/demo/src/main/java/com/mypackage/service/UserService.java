@@ -20,7 +20,7 @@ public class UserService {
 
     // 사용자 조회 (ID로)
     public Optional<User> getUserById(Integer userId) {
-        return userRepository.findById(userId);
+        return userRepository.findById(userId); // Optional로 반환
     }
 
     // 사용자 조회 (이메일로)
