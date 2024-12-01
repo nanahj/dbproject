@@ -1,51 +1,83 @@
-import React, { useState } from "react";
-import { useExpenses } from "../components/ExpensesContext";
+import React, { useEffect, useState } from "react";
+import axiosClient from "../api/axiosClient";
 import "../styles/Main.css";
 
 const Main = () => {
-  const { expenses, addExpense, removeExpense } = useExpenses();
+  const [expenses, setExpenses] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [expense, setExpense] = useState({
+    userId: 1, // 기본 사용자 ID
     date: "",
     amount: "",
     description: "",
-    category: "",
+    categoryId: "",
     type: "수입",
   });
-  const [expenseType, setExpenseType] = useState("수입");
 
-  const categories = {
-    수입: ["급여", "보너스", "기타"],
-    지출: ["식비", "교통비", "기타"],
+  // 모든 지출 내역 가져오기
+  const fetchExpenses = async () => {
+    try {
+      const response = await axiosClient.get("/expenses");
+      setExpenses(response.data);
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+    }
   };
 
+  // 모든 카테고리 가져오기
+  const fetchCategories = async () => {
+    try {
+      const response = await axiosClient.get("/categories");
+      setCategories(response.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  // 입력 값 변경 처리
   const handleChange = (e) => {
     const { name, value } = e.target;
     setExpense((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleTypeChange = (type) => {
-    setExpenseType(type);
-    setExpense((prev) => ({ ...prev, type, category: "" })); // 카테고리 초기화
-  };
-
-  const handleSubmit = (e) => {
+  // 새 지출 추가
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (expense.date && expense.amount && expense.description) {
-      addExpense({ ...expense, id: Date.now() });
-      setExpense({ date: "", amount: "", description: "", category: "", type: expenseType });
+    try {
+      await axiosClient.post("/expenses", expense);
+      fetchExpenses(); // 데이터 새로고침
+      setExpense({
+        userId: 1, // 기본 사용자 ID
+        date: "",
+        amount: "",
+        description: "",
+        categoryId: "",
+        type: "수입",
+      });
+    } catch (error) {
+      console.error("Error adding expense:", error);
     }
   };
+
+  // 지출 삭제
+  const handleDelete = async (id) => {
+    try {
+      await axiosClient.delete(`/expenses/${id}`);
+      fetchExpenses(); // 데이터 새로고침
+    } catch (error) {
+      console.error("Error deleting expense:", error);
+    }
+  };
+
+  // 컴포넌트 마운트 시 데이터 가져오기
+  useEffect(() => {
+    fetchExpenses();
+    fetchCategories();
+  }, []);
 
   return (
     <div className="full-container">
       <div className="add-container">
-        <button className="button-io" onClick={() => handleTypeChange("수입")}>
-          수입
-        </button>
-        <button className="button-io" onClick={() => handleTypeChange("지출")}>
-          지출
-        </button>
-
         <form onSubmit={handleSubmit}>
           <input
             type="date"
@@ -71,17 +103,21 @@ const Main = () => {
             required
           />
           <select
-            name="category"
-            value={expense.category}
+            name="categoryId"
+            value={expense.categoryId}
             onChange={handleChange}
             required
           >
-            <option value="">카테고리</option>
-            {categories[expenseType].map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
+            <option value="">카테고리 선택</option>
+            {categories.map((category) => (
+              <option key={category.categoryId} value={category.categoryId}>
+                {category.name}
               </option>
             ))}
+          </select>
+          <select name="type" value={expense.type} onChange={handleChange}>
+            <option value="수입">수입</option>
+            <option value="지출">지출</option>
           </select>
           <button type="submit">추가</button>
         </form>
@@ -101,14 +137,14 @@ const Main = () => {
           </thead>
           <tbody>
             {expenses.map((item) => (
-              <tr key={item.id}>
+              <tr key={item.expenseId}>
                 <td>{item.date}</td>
                 <td>{item.amount}</td>
                 <td>{item.description}</td>
-                <td>{item.category}</td>
+                <td>{item.category?.name || "없음"}</td>
                 <td>{item.type}</td>
                 <td>
-                  <button onClick={() => removeExpense(item.id)}>삭제</button>
+                  <button onClick={() => handleDelete(item.expenseId)}>삭제</button>
                 </td>
               </tr>
             ))}
